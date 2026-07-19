@@ -1,0 +1,1 @@
+export const API_URL = "https://chat-app-backend-a1ax.onrender.com/api";
