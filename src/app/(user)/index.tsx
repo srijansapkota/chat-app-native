@@ -2,6 +2,7 @@ import "../../../global.css";
 import {
   ActivityIndicator,
   FlatList,
+  Pressable,
   Text,
   TouchableOpacity,
   View,
@@ -13,11 +14,13 @@ import { User as UserIcon } from "lucide-react-native";
 import { formatTimestamp, getPreviewText } from "./utils/index.utils";
 import { useChatList } from "./hooks/useChatList";
 import { useNewChatSocket } from "./hooks/useNewChatSocket";
-
+import { useLogout } from "./hooks/useLogout";
+import { Modal } from "react-native";
 
 export default function ChatListScreen() {
   const { chats, loading, handleNewMessage } = useChatList();
   useNewChatSocket(handleNewMessage);
+  const { showModal, setShowModal, handleLogout } = useLogout();
 
   if (loading && chats.length === 0) {
     return (
@@ -35,9 +38,50 @@ export default function ChatListScreen() {
         contentContainerStyle={{ flexGrow: 1, padding: 16 }}
         ItemSeparatorComponent={() => <View style={{ height: 12 }} />}
         ListHeaderComponent={
-          <Text className="text-3xl font-bold text-gray-900 tracking-tight mb-4">
-            Chats
-          </Text>
+          <View>
+            <View
+              className="flex-row justify-between items-center mb-4"
+              style={{ zIndex: 10 }}
+            >
+              <Text className="text-3xl font-bold text-gray-900 tracking-tight">
+                Chats
+              </Text>
+              <View>
+                <Pressable
+                  onPress={() => setShowModal(true)}
+                  className="p-2 rounded-full bg-gray-100"
+                >
+                  <UserIcon size={22} color="#374151" />
+                </Pressable>
+
+                <Modal
+                  visible={showModal}
+                  transparent
+                  animationType="fade"
+                  onRequestClose={() => setShowModal(false)}
+                >
+                  <Pressable
+                    style={{ flex: 1 }}
+                    onPress={() => setShowModal(false)}
+                  >
+                    <View
+                      className="absolute bg-white rounded-xl border border-gray-200 shadow-lg"
+                      style={{ minWidth: 140, elevation: 6, top: 90, right: 16 }}
+                    >
+                      <Pressable
+                        onPress={handleLogout}
+                        className="px-4 py-3 active:bg-gray-50"
+                      >
+                        <Text className="text-sm text-red-600 font-medium">
+                          Logout
+                        </Text>
+                      </Pressable>
+                    </View>
+                  </Pressable>
+                </Modal>
+              </View>
+            </View>
+          </View>
         }
         ListEmptyComponent={
           <View className="flex-1 items-center justify-center py-20">

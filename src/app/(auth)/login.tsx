@@ -57,9 +57,9 @@ export default function Login() {
       behavior="padding"
       style={{ flex: 1, marginTop: 100 }}
     >
-      <View className="text-4xl text-blue-500 p-4">
+      <Text className="text-4xl text-blue-500 p-4">
         MyChat
-      </View>
+      </Text>
         <View className="gap-4 rounded-lg border border-neutral-200 p-4">
           <Text className="text-2xl font-semibold text-neutral-900">Login</Text>
 

@@ -8,10 +8,10 @@ function mergeNewMessage(chats: ChatListItem[], message: Message): ChatListItem[
   const otherUserId = chats.find(
     (c) => c.user._id === message.senderId || c.user._id === message.receiverId
   )?.user._id;
-  if (!otherUserId) return chats;
+  // if (!otherUserId) return chats;
 
   const index = chats.findIndex((c) => c.user._id === otherUserId);
-  if (index === -1) return chats;
+  // if (index === -1) return chats;
 
   const updated = [...chats];
   const [chat] = updated.splice(index, 1);
